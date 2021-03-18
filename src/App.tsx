@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { FileData } from './constants';
-import { getFiles } from './utils';
+import { getFiles, sortFieldByString } from './utils';
 import { QueryInput } from './QueryInput';
 import { FileModal } from './FileModal';
 import './App.css';
 
 function App() {
 	const [files, setFiles] = useState<FileData[]>([]);
+
+	const [sortStatus, setSortStatus] = useState({
+		category: 1,
+		lastReviewed: 1
+	});
+
 	const [showModal, setShowModal] = useState<boolean>(false);
 	const toggleModal = () => setShowModal(!showModal);
 
@@ -22,13 +28,23 @@ function App() {
 		setFiles(result);
 	};
 
+	const handleSort = (field: string) => {
+		const order = sortStatus[field as 'category' | 'lastReviewed'];
+		const sortedFiles = sortFieldByString([...files], field, order);
+		setFiles([...sortedFiles]);
+		setSortStatus({ ...sortStatus, [field]: order * -1 });
+	}
 
 	return (
 		<div className="App">
 			<h1>Files</h1>
-			<button onClick={toggleModal}>Add file</button>
-			<QueryInput files={files} setFiles={setFiles} />
-			<button onClick={handleClick}>Reset Data</button>
+			<div>
+				<button onClick={toggleModal}>Add file</button>
+				<QueryInput files={files} setFiles={setFiles} />
+				<button onClick={handleClick}>Reset Data</button>
+				<button onClick={() => handleSort("category")}>Sort by category</button>
+				<button onClick={() => handleSort("lastReviewed")}>Sort by date</button>
+			</div>
 			<div className="files">
 				{files.map((file: FileData) =>
 					<div key={file.blobName}>

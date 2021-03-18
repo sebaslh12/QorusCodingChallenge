@@ -28,6 +28,12 @@ export const _filterWhereIncludes = (array: any[], identifier: any, field: strin
 	}
 };
 
-export const sortFieldByString = (array: any[], field: string) => {
-	return array.sort((a, b) => a[field].localeCompare(b[field]));
+export const sortFieldByString = (array: any[], field: string, order: number) => {
+	return array.sort((a, b) => {
+		if (order === 1) {
+			return a[field].localeCompare(b[field])
+		} else {
+			return b[field].localeCompare(a[field])
+		}
+	});
 };
