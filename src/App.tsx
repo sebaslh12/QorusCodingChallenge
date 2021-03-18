@@ -38,7 +38,7 @@ function App() {
 	return (
 		<div className="App">
 			<h1>Files</h1>
-			<div>
+			<div className="button-container">
 				<button onClick={toggleModal}>Add file</button>
 				<QueryInput files={files} setFiles={setFiles} />
 				<button onClick={handleClick}>Reset Data</button>
@@ -46,11 +46,17 @@ function App() {
 				<button onClick={() => handleSort("lastReviewed")}>Sort by date</button>
 			</div>
 			<div className="files">
+				<div className="file-item header">
+					<p className="name-col">Name</p>
+					<p className="size">Size</p>
+					<p className="category">Category</p>
+					<p>Last Reviewed</p>
+				</div>
 				{files.map((file: FileData) =>
-					<div key={file.blobName}>
-						<a href={`https://qorus-test.azurewebsites.net/QorusFile/${file.blobName}`} target="_blank" rel="noreferrer">{file.fileName}</a>
-						<span>{file.size}</span>
-						<span>{file.category}</span>
+					<div className="file-item" key={file.blobName}>
+						<a className="name-col" href={`https://qorus-test.azurewebsites.net/QorusFile/${file.blobName}`} target="_blank" rel="noreferrer">{file.fileName}</a>
+						<p className="size">{file.size} bytes</p>
+						<p className="category">{file.category}</p>
 						<span>{file.lastReviewed}</span>
 					</div>
 				)}

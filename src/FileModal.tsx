@@ -45,9 +45,12 @@ export const FileModal = ({ isOpen, onClose, setFiles }: { isOpen: boolean, onCl
 	}
 
 	return (
-		<Modal isOpen={isOpen} onRequestClose={onClose} ariaHideApp={false}>
+		<Modal className="modal" isOpen={isOpen} onRequestClose={onClose} ariaHideApp={false}>
 			<form onSubmit={handleSubmit}>
-				<input type="file" name="file" onChange={handleFileChange} />
+				<label htmlFor="">
+					File to upload
+					<input type="file" name="file" onChange={handleFileChange} required/>
+				</label>
 				<label htmlFor="">
 					Category
 					<input type="text" name="category" placeholder="File Category" value={values.category} onChange={handleChange} maxLength={100} pattern="^[A-Z0-9-_]+$" required />

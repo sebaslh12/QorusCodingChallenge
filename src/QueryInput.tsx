@@ -21,8 +21,8 @@ export const QueryInput = ({ files, setFiles }: { files: FileData[], setFiles: R
 
 	return (
 		<Fragment>
-			<input type="text" name="category" value={values.category} placeholder="Search by category" onChange={handleChange} />
 			<input type="text" name="fileName" value={values.fileName} placeholder="Search by name" onChange={handleChange} />
+			<input type="text" name="category" value={values.category} placeholder="Search by category" onChange={handleChange} />
 		</Fragment>
 	);
 }
