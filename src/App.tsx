@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { FileData } from './constants';
 import { getFiles } from './utils';
-import './App.css';
 import { QueryInput } from './QueryInput';
+import { FileModal } from './FileModal';
+import './App.css';
 
 function App() {
 	const [files, setFiles] = useState<FileData[]>([]);
+	const [showModal, setShowModal] = useState<boolean>(false);
+	const toggleModal = () => setShowModal(!showModal);
 
 	useEffect(() => {
 		(async () => {
@@ -14,14 +17,16 @@ function App() {
 		})()
 	}, []);
 
-	const handleClick = async ()=>{
+	const handleClick = async () => {
 		const result = await getFiles();
 		setFiles(result);
 	};
 
+
 	return (
 		<div className="App">
 			<h1>Files</h1>
+			<button onClick={toggleModal}>Add file</button>
 			<QueryInput files={files} setFiles={setFiles} />
 			<button onClick={handleClick}>Reset Data</button>
 			<div className="files">
@@ -34,6 +39,7 @@ function App() {
 					</div>
 				)}
 			</div>
+			{showModal && <FileModal isOpen={showModal} onClose={toggleModal} setFiles={setFiles} />}
 		</div>
 	);
 }

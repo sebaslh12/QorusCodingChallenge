@@ -11,19 +11,14 @@ export const getFiles = async () => {
 	}
 };
 
-export const postFile = async (data : any) => {
+export const postFile = async (data: any) => {
 	try {
-		const resp = await axios.post(ENDPOINTURL, data, {
-			headers: {
-				"Content-Type": "multipart/form-data; boundary: ---------------------------7da24f2e50046",
-			}
-		});
-		console.log(resp);
+		const resp = await axios.post(ENDPOINTURL, data);
 		return resp;
 	} catch (error) {
 		console.warn(error);
 	}
-}
+};
 
 export const _filterWhereIncludes = (array: any[], identifier: any, field: string) => {
 	try {
@@ -31,4 +26,8 @@ export const _filterWhereIncludes = (array: any[], identifier: any, field: strin
 	} catch (exception) {
 		throw new Error(`[func._findWhere] ${exception.message}`);
 	}
+};
+
+export const sortFieldByString = (array: any[], field: string) => {
+	return array.sort((a, b) => a[field].localeCompare(b[field]));
 };
